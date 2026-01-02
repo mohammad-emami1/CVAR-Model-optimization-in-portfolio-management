@@ -17,9 +17,9 @@ FHS uses standardized residuals from a GARCH model and rescales them by the most
 
 **GARCH(1,1) Fit:** For each asset \(i\), we model returns as:
 
-\[
+$$
 r_{i,t} = \mu_i + \sigma_{i,t} \varepsilon_{i,t}, \quad \varepsilon_{i,t} \sim \text{i.i.d. } N(0,1)
-\]
+$$
 
 \[
 \sigma_{i,t}^2 = \omega_i + \alpha_i \varepsilon_{i,t-1}^2 + \beta_i \sigma_{i,t-1}^2
