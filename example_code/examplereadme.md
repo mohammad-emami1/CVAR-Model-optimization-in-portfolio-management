@@ -111,7 +111,7 @@ weights, realized_cvar = optimize_portfolio(
 print("Optimized Portfolio Weights:")
 print(weights)
 print(f"Realized CVaR over scenarios: {realized_cvar:.4f}")
-```ss
+```
 Notes
 alpha_risk: Tail risk level for CVaR constraint (e.g., 0.05 = worst 5% of scenarios).
 
