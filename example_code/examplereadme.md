@@ -112,22 +112,17 @@ print("Optimized Portfolio Weights:")
 print(weights)
 print(f"Realized CVaR over scenarios: {realized_cvar:.4f}")
 ```
-Notes
-alpha_risk: Tail risk level for CVaR constraint (e.g., 0.05 = worst 5% of scenarios).
+### Notes on Parameters
 
-beta_conf: Confidence level for VaR (e.g., 0.95 = 95% confidence).
+- **alpha_risk**: Tail risk level for the CVaR constraint. For example, `0.05` limits the average loss in the worst 5% of scenarios.  
+- **beta_conf**: Confidence level for VaR. For example, `0.95` corresponds to a 95% confidence that losses will not exceed the VaR threshold.  
+- **gamma**: Maximum weight allocation per asset to enforce diversification.  
+- **n_scenarios**: Number of Filtered Historical Simulation (FHS) scenarios generated for the optimization.
 
-gamma: Maximum allocation per asset to enforce diversification.
+## 5. Assumptions & Limitations
 
-n_scenarios: Number of FHS scenarios to generate for optimization.
-
-5. Assumptions & Limitations
-GARCH Assumptions: Assumes volatility clustering is the main driver of risk; does not capture extreme regime shifts not seen in historical residuals.
-
-Square-Root Scaling: Scaling daily volatility to multi-day horizons assumes returns are independent and not autocorrelated.
-
-Historical Dependence: FHS preserves correlations from historical data but cannot anticipate correlation breakdowns during crises.
-
-Static Optimization: Single-period model; ignores transaction costs and does not include multi-period rebalancing logic.
-
-Solver Considerations: The default CBC solver is sufficient for small to medium universes (<500 assets). For larger universes or faster performance, use a commercial solver like Gurobi.
+- **GARCH Assumptions**: Assumes volatility clustering is the primary driver of risk and may not capture extreme regime shifts not present in historical residuals.  
+- **Square-Root Scaling**: Scaling daily volatility to a multi-day horizon assumes returns are independent and not autocorrelated.  
+- **Historical Dependence**: FHS preserves historical correlations but cannot predict correlation breakdowns during market crises.  
+- **Static Optimization**: This is a single-period optimization; it does not account for transaction costs or multi-period rebalancing.  
+- **Solver Considerations**: The default CBC solver works well for small to medium asset universes (<500 assets). For larger universes or faster performance, a commercial solver like Gurobi is recommended.
