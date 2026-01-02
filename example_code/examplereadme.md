@@ -86,3 +86,48 @@ $$
 ### Requirements
 ```bash
 pip install numpy pandas yfinance pulp arch
+```
+Example Usage
+```
+python
+
+from cvar_optimizer import optimize_portfolio
+
+# Define your universe of assets
+stocks = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "NVDA", "META", "NFLX", "INTC", "IBM"]
+
+# Optimize portfolio with CVaR-FHS
+# alpha_risk = 0.05 corresponds to limiting the average loss in the worst 5% of scenarios
+weights, realized_cvar = optimize_portfolio(
+    assets=stocks,
+    start_date="2023-01-01",
+    end_date="2025-01-01",
+    alpha_risk=0.05,
+    beta_conf=0.95,
+    gamma=0.25,
+    n_scenarios=2000
+)
+
+print("Optimized Portfolio Weights:")
+print(weights)
+print(f"Realized CVaR over scenarios: {realized_cvar:.4f}")
+```ss
+Notes
+alpha_risk: Tail risk level for CVaR constraint (e.g., 0.05 = worst 5% of scenarios).
+
+beta_conf: Confidence level for VaR (e.g., 0.95 = 95% confidence).
+
+gamma: Maximum allocation per asset to enforce diversification.
+
+n_scenarios: Number of FHS scenarios to generate for optimization.
+
+5. Assumptions & Limitations
+GARCH Assumptions: Assumes volatility clustering is the main driver of risk; does not capture extreme regime shifts not seen in historical residuals.
+
+Square-Root Scaling: Scaling daily volatility to multi-day horizons assumes returns are independent and not autocorrelated.
+
+Historical Dependence: FHS preserves correlations from historical data but cannot anticipate correlation breakdowns during crises.
+
+Static Optimization: Single-period model; ignores transaction costs and does not include multi-period rebalancing logic.
+
+Solver Considerations: The default CBC solver is sufficient for small to medium universes (<500 assets). For larger universes or faster performance, use a commercial solver like Gurobi.
